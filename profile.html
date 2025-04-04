@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - RefferChain</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .profile-card {
+            padding: 20px;
+        }
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        .profile-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .form-row {
+            margin-bottom: 20px;
+        }
+        .mdl-textfield {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+        <!-- Include the same header and drawer as dashboard.html -->
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Profile Settings</span>
+                <div class="mdl-layout-spacer"></div>
+            </div>
+        </header>
+
+        <!-- Include the same drawer navigation as dashboard.html -->
+        <div class="mdl-layout__drawer">
+            <!-- Copy the entire drawer content from dashboard.html -->
+        </div>
+
+        <main class="mdl-layout__content">
+            <div class="profile-container">
+                <div class="mdl-card mdl-shadow--2dp profile-card">
+                    <div class="profile-header">
+                        <img src="https://ui-avatars.com/api/?name=User&background=random" 
+                             alt="Profile" class="profile-avatar" id="profileAvatar">
+                        <input type="file" id="avatarUpload" style="display: none" accept="image/*">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                                onclick="document.getElementById('avatarUpload').click()">
+                            Change Avatar
+                        </button>
+                    </div>
+
+                    <form class="profile-form" id="profileForm">
+                        <div class="form-row">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" id="fullName">
+                                <label class="mdl-textfield__label" for="fullName">Full Name</label>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="email" id="email" readonly>
+                                <label class="mdl-textfield__label" for="email">Email</label>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="tel" id="phone">
+                                <label class="mdl-textfield__label" for="phone">Phone Number</label>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                                    onclick="changePassword()">
+                                Change Password
+                            </button>
+                        </div>
+
+                        <div class="form-row">
+                            <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Password Change Dialog -->
+    <dialog class="mdl-dialog" id="passwordDialog">
+        <h4 class="mdl-dialog__title">Change Password</h4>
+        <div class="mdl-dialog__content">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="password" id="currentPassword">
+                <label class="mdl-textfield__label" for="currentPassword">Current Password</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="password" id="newPassword">
+                <label class="mdl-textfield__label" for="newPassword">New Password</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="password" id="confirmPassword">
+                <label class="mdl-textfield__label" for="confirmPassword">Confirm New Password</label>
+            </div>
+        </div>
+        <div class="mdl-dialog__actions">
+            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                    onclick="updatePassword()">Update Password</button>
+            <button type="button" class="mdl-button close"
+                    onclick="document.getElementById('passwordDialog').close()">Cancel</button>
+        </div>
+    </dialog>
+
+    <script>
+        // Check authentication
+        document.addEventListener('DOMContentLoaded', () => {
+            const userLoggedIn = localStorage.getItem('userLoggedIn');
+            const userEmail = localStorage.getItem('userEmail');
+
+            if (!userLoggedIn || !userEmail) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Load user profile data
+            document.getElementById('email').value = userEmail;
+            // Load other profile data from storage or API
+        });
+
+        // Handle profile form submission
+        document.getElementById('profileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Save profile changes
+            alert('Profile updated successfully!');
+        });
+
+        // Handle avatar change
+        document.getElementById('avatarUpload').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileAvatar').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Password change dialog
+        function changePassword() {
+            const dialog = document.getElementById('passwordDialog');
+            if (!dialog.showModal) {
+                dialogPolyfill.registerDialog(dialog);
+            }
+            dialog.showModal();
+        }
+
+        function updatePassword() {
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+
+            if (newPass !== confirmPass) {
+                alert('New passwords do not match!');
+                return;
+            }
+
+            // Update password logic here
+            alert('Password updated successfully!');
+            document.getElementById('passwordDialog').close();
+        }
+    </script>
+    <script src="js/main.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

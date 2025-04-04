@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdraw - RefferChain</title>
+    <!-- Material Design Lite -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .payment-method {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 15px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .payment-method:hover {
+            border-color: var(--accent-color);
+        }
+        .payment-method.selected {
+            border-color: var(--accent-color);
+            background: rgba(255, 64, 129, 0.1);
+        }
+        .payment-method img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-drawer">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Withdraw</span>
+                <div class="mdl-layout-spacer"></div>
+                <nav class="mdl-navigation mdl-layout--large-screen-only">
+                    <a class="mdl-navigation__link" href="profile.html">
+                        <i class="material-icons">account_circle</i>
+                    </a>
+                    <a class="mdl-navigation__link" href="notifications.html">
+                        <i class="material-icons">notifications</i>
+                    </a>
+                    <a class="mdl-navigation__link" href="settings.html">
+                        <i class="material-icons">settings</i>
+                    </a>
+                </nav>
+            </div>
+        </header>
+        
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">RefferChain</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="dashboard.html">
+                    <i class="material-icons">dashboard</i> Dashboard
+                </a>
+                <a class="mdl-navigation__link" href="deposit.html">
+                    <i class="material-icons">account_balance_wallet</i> Top Up
+                </a>
+                <a class="mdl-navigation__link active" href="withdraw.html">
+                    <i class="material-icons">money</i> Withdraw
+                </a>
+                <a class="mdl-navigation__link" href="profile.html">
+                    <i class="material-icons">person</i> Profile
+                </a>
+                <a class="mdl-navigation__link" href="referrals.html">
+                    <i class="material-icons">group</i> Referrals
+                </a>
+                <a class="mdl-navigation__link" href="transactions.html">
+                    <i class="material-icons">history</i> Transactions
+                </a>
+                <a class="mdl-navigation__link" href="support.html">
+                    <i class="material-icons">help</i> Support
+                </a>
+                <div class="mdl-layout-spacer"></div>
+                <a class="mdl-navigation__link" href="logout.html">
+                    <i class="material-icons">exit_to_app</i> Logout
+                </a>
+            </nav>
+        </div>
+
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                <!-- Withdraw Form Card -->
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-cell--2-offset-desktop">
+                        <div class="mdl-card mdl-shadow--2dp" style="width: 100%;">
+                            <div class="mdl-card__title">
+                                <h2 class="mdl-card__title-text">Withdraw Funds</h2>
+                            </div>
+                            <div class="mdl-card__supporting-text">
+                                <form action="#" id="withdrawForm">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%;">
+                                        <input class="mdl-textfield__input" type="number" id="amount" min="1">
+                                        <label class="mdl-textfield__label" for="amount">Amount ($)</label>
+                                    </div>
+
+                                    <p>Select Payment Method</p>
+                                    <div class="payment-methods">
+                                        <label class="payment-method">
+                                            <input type="radio" name="payment" value="jazzcash">
+                                            <img src="images/jazzcash-logo.png" alt="JazzCash">
+                                            <span>JazzCash</span>
+                                        </label>
+                                        <label class="payment-method">
+                                            <input type="radio" name="payment" value="easypaisa">
+                                            <img src="images/easypaisa-logo.png" alt="EasyPaisa">
+                                            <span>EasyPaisa</span>
+                                        </label>
+                                        <label class="payment-method">
+                                            <input type="radio" name="payment" value="trx">
+                                            <img src="images/trx-logo.png" alt="TRX">
+                                            <span>TRX</span>
+                                        </label>
+                                        <label class="payment-method">
+                                            <input type="radio" name="payment" value="usdt">
+                                            <img src="images/usdt-logo.png" alt="USDT">
+                                            <span>USDT</span>
+                                        </label>
+                                    </div>
+
+                                    <div id="walletField" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%; display: none;">
+                                        <input class="mdl-textfield__input" type="text" id="walletAddress">
+                                        <label class="mdl-textfield__label" for="walletAddress">Wallet Address</label>
+                                    </div>
+
+                                    <div id="phoneField" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%; display: none;">
+                                        <input class="mdl-textfield__input" type="tel" id="phoneNumber" pattern="[0-9]*">
+                                        <label class="mdl-textfield__label" for="phoneNumber">Phone Number</label>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="mdl-card__actions mdl-card--border">
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="submitWithdraw()">
+                                    Submit Withdrawal
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Include MDL JavaScript -->
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <!-- Include our custom JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/withdraw.js"></script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - RefferChain</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <style>
+        .stats-card {
+            min-height: 120px;
+            width: 100%;
+        }
+        .stats-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .stats-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        .user-details p {
+            margin: 10px 0;
+            padding: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .user-details strong {
+            display: inline-block;
+            width: 180px;
+        }
+        .mdl-data-table {
+            width: 100%;
+        }
+        .mdl-data-table td, 
+        .mdl-data-table th {
+            text-align: left !important;
+        }
+        .password-hidden {
+            letter-spacing: 2px;
+        }
+        /* Fix dialog styles for dark theme */
+        .mdl-dialog {
+            background-color: var(--dark-surface) !important;
+            color: var(--dark-text) !important;
+        }
+        /* Fix search input in dark theme */
+        .mdl-textfield__expandable-holder .mdl-textfield__input {
+            color: var(--dark-text) !important;
+        }
+        .referral-info-container {
+            padding: 16px;
+        }
+        .referral-section {
+            margin-bottom: 16px;
+        }
+        .inner-table {
+            width: 100%;
+        }
+        .stat-card {
+            display: inline-block;
+            margin: 8px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        .stat-value {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Admin Dashboard</span>
+                <div class="mdl-layout-spacer"></div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" id="search">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">RefferChain</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="#dashboard">
+                    <i class="material-icons">dashboard</i> Dashboard
+                </a>
+                <a class="mdl-navigation__link" href="#users">
+                    <i class="material-icons">people</i> Users
+                </a>
+                <a class="mdl-navigation__link" href="#transactions">
+                    <i class="material-icons">account_balance_wallet</i> Transactions
+                </a>
+                <a class="mdl-navigation__link" href="#referrals">
+                    <i class="material-icons">share</i> Referrals
+                </a>
+                <a class="mdl-navigation__link" href="#settings">
+                    <i class="material-icons">settings</i> Settings
+                </a>
+            </nav>
+        </div>
+
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                <!-- Dashboard Overview -->
+                <section class="mdl-grid" id="dashboard">
+                    <div class="mdl-cell mdl-cell--3-col">
+                        <div class="mdl-card mdl-shadow--2dp stats-card">
+                            <div class="mdl-card__title">
+                                <h2 class="mdl-card__title-text">Total Users</h2>
+                            </div>
+                            <div class="mdl-card__supporting-text">
+                                <span class="stats-number">0</span>
+                                <span class="stats-label">Active Users</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mdl-cell mdl-cell--3-col">
+                        <div class="mdl-card mdl-shadow--2dp stats-card">
+                            <div class="mdl-card__title">
+                                <h2 class="mdl-card__title-text">Total Balance</h2>
+                            </div>
+                            <div class="mdl-card__supporting-text">
+                                <span class="stats-number">$0</span>
+                                <span class="stats-label">All Users</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mdl-cell mdl-cell--3-col">
+                        <div class="mdl-card mdl-shadow--2dp stats-card">
+                            <div class="mdl-card__title">
+                                <h2 class="mdl-card__title-text">Total Referrals</h2>
+                            </div>
+                            <div class="mdl-card__supporting-text">
+                                <span class="stats-number">0</span>
+                                <span class="stats-label">Active Referrals</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mdl-cell mdl-cell--3-col">
+                        <div class="mdl-card mdl-shadow--2dp stats-card">
+                            <div class="mdl-card__title">
+                                <h2 class="mdl-card__title-text">Pending Withdrawals</h2>
+                            </div>
+                            <div class="mdl-card__supporting-text">
+                                <span class="stats-number">0</span>
+                                <span class="stats-label">Requests</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Users Table -->
+                <div class="page-content">
+                    <div class="mdl-card mdl-shadow--2dp" style="width: 100%; margin: 20px;">
+                        <div class="mdl-card__title">
+                            <h2 class="mdl-card__title-text">User Management</h2>
+                            <div class="mdl-layout-spacer"></div>
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                                <label class="mdl-button mdl-js-button mdl-button--icon" for="search-users">
+                                    <i class="material-icons">search</i>
+                                </label>
+                                <div class="mdl-textfield__expandable-holder">
+                                    <input class="mdl-textfield__input" type="text" id="search-users" onkeyup="searchUsers()">
+                                    <label class="mdl-textfield__label">Search users...</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mdl-card__supporting-text" style="width: 100%; padding: 0;">
+                            <div style="overflow-x: auto;">
+                                <table class="mdl-data-table mdl-js-data-table" style="width: 100%; white-space: nowrap;">
+                                    <thead>
+                                        <tr>
+                                            <th class="mdl-data-table__cell--non-numeric">User ID</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Name</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Email</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Phone</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Refer Code</th>
+                                            <th>Balance</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Password</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="usersTableBody">
+                                        <!-- Sample User Row -->
+                                        <tr>
+                                            <td class="mdl-data-table__cell--non-numeric">001</td>
+                                            <td class="mdl-data-table__cell--non-numeric">John Doe</td>
+                                            <td class="mdl-data-table__cell--non-numeric">john@example.com</td>
+                                            <td class="mdl-data-table__cell--non-numeric">+1234567890</td>
+                                            <td class="mdl-data-table__cell--non-numeric">REF001</td>
+                                            <td>$100.00</td>
+                                            <td class="mdl-data-table__cell--non-numeric">
+                                                <span class="password-hidden">••••••••</span>
+                                                <button class="mdl-button mdl-js-button mdl-button--icon" onclick="togglePassword(this)">
+                                                    <i class="material-icons">visibility</i>
+                                                </button>
+                                            </td>
+                                            <td class="mdl-data-table__cell--non-numeric">
+                                                <span class="status-badge success">Active</span>
+                                            </td>
+                                            <td>
+                                                <button class="mdl-button mdl-js-button mdl-button--icon" onclick="editUser('001')">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
+                                                <button class="mdl-button mdl-js-button mdl-button--icon" onclick="toggleUserStatus('001')">
+                                                    <i class="material-icons">block</i>
+                                                </button>
+                                                <button class="mdl-button mdl-js-button mdl-button--icon" onclick="viewUserDetails('001')">
+                                                    <i class="material-icons">info</i>
+                                                </button>
+                                                <button class="mdl-button mdl-js-button mdl-button--icon" onclick="viewReferrals('001')">
+                                                    <i class="material-icons">group</i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="exportUsers()">
+                                Export Users
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Referral Details Dialog -->
+                <dialog class="mdl-dialog" id="referralDialog">
+                    <h4 class="mdl-dialog__title">Referral Details</h4>
+                    <div class="mdl-dialog__content">
+                        <div class="referral-stats">
+                            <div class="stat-card">
+                                <span class="stat-label">Total Direct Earnings</span>
+                                <span class="stat-value" id="directEarnings">$0.00</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Total Indirect Earnings</span>
+                                <span class="stat-value" id="indirectEarnings">$0.00</span>
+                            </div>
+                        </div>
+
+                        <!-- Direct Referrals -->
+                        <div class="referral-section">
+                            <h5>Direct Referrals (Level 1)</h5>
+                            <div style="overflow-x: auto;">
+                                <table class="mdl-data-table mdl-js-data-table inner-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="mdl-data-table__cell--non-numeric">Name</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Email</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Phone</th>
+                                            <th>Balance</th>
+                                            <th>Join Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="directReferralsTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Indirect Referrals -->
+                        <div class="referral-section">
+                            <h5>Indirect Referrals (Level 2)</h5>
+                            <div style="overflow-x: auto;">
+                                <table class="mdl-data-table mdl-js-data-table inner-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="mdl-data-table__cell--non-numeric">Name</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Email</th>
+                                            <th class="mdl-data-table__cell--non-numeric">Phone</th>
+                                            <th>Balance</th>
+                                            <th>Join Date</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="indirectReferralsTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mdl-dialog__actions">
+                        <button type="button" class="mdl-button close" onclick="closeReferralDialog()">Close</button>
+                    </div>
+                </dialog>
+
+                <!-- User Details Dialog -->
+                <dialog class="mdl-dialog" id="userDetailsDialog">
+                    <h4 class="mdl-dialog__title">User Details</h4>
+                    <div class="mdl-dialog__content">
+                        <div class="user-details">
+                            <p><strong>User ID:</strong> <span id="detailUserId"></span></p>
+                            <p><strong>Name:</strong> <span id="detailName"></span></p>
+                            <p><strong>Email:</strong> <span id="detailEmail"></span></p>
+                            <p><strong>Phone:</strong> <span id="detailPhone"></span></p>
+                            <p><strong>Refer Code:</strong> <span id="detailReferCode"></span></p>
+                            <p><strong>Balance:</strong> <span id="detailBalance"></span></p>
+                            <p><strong>Total Direct Referrals:</strong> <span id="detailDirectRefs"></span></p>
+                            <p><strong>Total Indirect Referrals:</strong> <span id="detailIndirectRefs"></span></p>
+                            <p><strong>Rank:</strong> <span id="detailRank"></span></p>
+                            <p><strong>Join Date:</strong> <span id="detailJoinDate"></span></p>
+                            <p><strong>Last Login:</strong> <span id="detailLastLogin"></span></p>
+                        </div>
+                    </div>
+                    <div class="mdl-dialog__actions">
+                        <button type="button" class="mdl-button close" onclick="closeUserDetails()">Close</button>
+                    </div>
+                </dialog>
+            </div>
+        </main>
+    </div>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.5.6/dialog-polyfill.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
